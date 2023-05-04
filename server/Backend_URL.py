@@ -1,8 +1,9 @@
-from flask import Flask, make_response, jsonify
+from flask import Flask, make_response, jsonify, request
 from flask_mysqldb import MySQL
 import random
 import MySQLdb.cursors
 import json
+import bcrypt
 
 
 app = Flask(__name__)
@@ -146,8 +147,8 @@ def Appointments_Username(Username):
         return 'Username have no appointments in database'
 
 
-@app.route('/appointment/insert/<string:SID>/<string:TID>/<string:Date>/<string:Time>/<string:Duration>/<string:SubjectName>', methods=['GET', 'POST'])
-def Appointment_insert(SID, TID, Date, Time, Duration, SubjectName):
+@app.route('/set-appointment', methods=['POST'])
+def Appointment_insert():
     AppointmentsID = []
     myCursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     myCursor.execute('SELECT AppointmentID FROM Appointments')
@@ -170,6 +171,31 @@ def Appointment_insert(SID, TID, Date, Time, Duration, SubjectName):
 
     msg = f'Insert successful, Appointment ID = {AppointmentID}, Student Username = {SID}, Tutor Username = {TID}'
     return msg
+
+# @app.route('/appointment/insert/<string:SID>/<string:TID>/<string:Date>/<string:Time>/<string:Duration>/<string:SubjectName>', methods=['GET', 'POST'])
+# def Appointment_insert(SID, TID, Date, Time, Duration, SubjectName):
+#     AppointmentsID = []
+#     myCursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+#     myCursor.execute('SELECT AppointmentID FROM Appointments')
+#     mysql.connection.commit()
+#     myResult = myCursor.fetchall()
+#     for x in myResult:
+#         AppointmentsID.append(x['AppointmentID'])
+
+#     AppointmentID = 'A' + str(random.randrange(9)) + str(random.randrange(9))\
+#         + random.choice('ABCDEFGHIJKLMNOPQRSTUVWXYZ')+str(random.randrange(9))
+
+#     while AppointmentID in AppointmentsID:
+#         AppointmentID = 'A' + str(random.randrange(9)) + str(random.randrange(9))\
+#             + random.choice('ABCDEFGHIJKLMNOPQRSTUVWXYZ') + \
+#             str(random.randrange(9))
+
+#     myCursor.execute('INSERT INTO Appointments VALUES (%s, %s, %s, %s, %s, %s,%s)',
+#                      (AppointmentID, SID, TID, Date, Time, Duration, SubjectName))
+#     mysql.connection.commit()
+
+#     msg = f'Insert successful, Appointment ID = {AppointmentID}, Student Username = {SID}, Tutor Username = {TID}'
+#     return msg
 
 
 @app.route('/availablehours', methods=['GET'])
@@ -320,25 +346,48 @@ def Subject_insert(TID, SubjectName):
     return msg
 
 
-@app.route('/login/<username>/<password>', methods=['GET'])
-def login(username, password):
-    account_types = ["Student", "Tutor"]
+# @app.route('/login/<username>/<password>', methods=['GET'])
+# def login(username, password):
+#     account_types = ["Student", "Tutor"]
 
-    if username and password:
-        for account_type in account_types:
-            myCursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-            myCursor.execute(
-                f"SELECT * FROM {account_type} WHERE Username= %s", [username])
-            mysql.connection.commit()
+#     if username and password:
+#         for account_type in account_types:
+#             myCursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+#             myCursor.execute(
+#                 f"SELECT * FROM {account_type} WHERE Username= %s", [username])
+#             mysql.connection.commit()
 
-            account = myCursor.fetchone()
+#             account = myCursor.fetchone()
 
-            if account:
-                return make_response(account, 200)
-    else:
-        return make_response("Please include username and password", 500)
+#             if account:
+#                 return make_response(account, 200)
+#     else:
+#         return make_response("Please include username and password", 500)
 
-    return make_response('No Account, need to create new account', 500)
+#     return make_response('No Account, need to create new account', 500)
+
+# @app.route('/login', methods=['GET'])
+# def login(email, password, callback):
+#     account_types = ["Student", "Tutor"]
+#     query = 'SELECT id, nickname, email, password FROM users WHERE email = ?';
+
+#     myCursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+#     myCursor.execute(query)
+#     mysql.connection.query(query, [ email ], function(err, results) {
+#     if (err) return callback(err);
+#     if (results.length === 0) return callback(new WrongUsernameOrPasswordError(email));
+#     const user = results[0];
+
+#     bcrypt.compare(password, user.password, function(err, isValid) {
+#       if (err || !isValid) return callback(err || new WrongUsernameOrPasswordError(email));
+
+#       callback(null, {
+#         user_id: user.id.toString(),
+#         nickname: user.nickname,
+#         email: user.email
+#       });
+#     });
+#   });
 
 
 @app.route('/signup/student/<string:Username>/<string:FirstName>/<string:LastName>/<string:Email>/<string:Password>/<string:EducationLevel>', methods=['POST'])
