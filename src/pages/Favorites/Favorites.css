@@ -1,0 +1,26 @@
+#tutors-page {
+  background-color: rgba(100, 181, 246);
+  min-height: 900px;
+}
+
+#tutors-title {
+  margin: 0;
+}
+
+#tutors-main {
+  display: flex;
+  justify-content: center;
+}
+
+#filters-column {
+  border-right: 1px solid;
+  padding: 10px;
+}
+
+#tutors-column {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 10px;
+  padding: 20px;
+  width: 85%;
+}

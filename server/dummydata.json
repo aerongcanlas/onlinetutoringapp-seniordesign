@@ -1,0 +1,30 @@
+{
+  "tutors": [{
+    "id": "1",
+    "name": "Jaya W.",
+    "subjects": ["Biology", "Chemistry", "Calculus I"],
+    "img": "tutors/tutor1.png",
+    "AboutMe": "I became a tutor because I'm determined to help other students..."
+  },
+  {
+    "id": "2",
+    "name": "Ruben B.",
+    "subjects": ["Physics", "Mechanics", "Chemistry"],
+    "img": "tutors/tutor2.png",
+    "AboutMe": "I became a tutor because I'm determined to help other students..."
+  },
+  {
+    "id": "3",
+    "name": "Cynthia P.",
+    "subjects": ["Computer Science", "History", "Physics"],
+    "img": "tutors/tutor3.png",
+    "AboutMe": "Have a question? Don't be afraid to ask! I am typically available on Mondays and..."
+  },
+  {
+    "id": "4",
+    "name": "Marcus G.",
+    "subjects": ["Calculus I", "Calculus II"],
+    "img": "tutors/tutor4.png",
+    "AboutMe": "Just like a calculator, you can count on me! Need help with Math? Book with me!"
+  }]
+}

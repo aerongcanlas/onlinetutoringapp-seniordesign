@@ -1,0 +1,83 @@
+a {
+  -webkit-transition: 0.3s all ease;
+  -o-transition: 0.3s all ease;
+  transition: 0.3s all ease;
+}
+a:hover {
+  text-decoration: none !important;
+}
+
+.img-fluid {
+  height: 150px;
+  margin: 0px auto 0px auto;
+}
+
+.content {
+  width: 360px;
+  height: auto;
+  margin: auto;
+  background-color: white;
+  border-radius: 3px;
+  justify-content: center;
+}
+
+h2 {
+  font-size: 20px;
+}
+
+.remember-me {
+  display: flex;
+  flex-direction: row;
+}
+
+@media (max-width: 991.98px) {
+  .content .bg {
+    height: 500px;
+  }
+}
+
+.content .contents,
+.content .bg {
+  width: 50%;
+}
+@media (max-width: 1199.98px) {
+  .content .contents,
+  .content .bg {
+    width: 100%;
+  }
+}
+
+.content .bg {
+  background-size: cover;
+  background-position: center;
+}
+
+.content a {
+  color: #888;
+  text-decoration: underline;
+}
+
+.content {
+  height: auto;
+}
+
+.content .forgot-pass {
+  position: relative;
+  top: 2px;
+  font-size: 14px;
+}
+
+.control .control_Type {
+  display: block;
+  position: relative;
+  padding-left: 30px;
+  margin-bottom: 15px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.login {
+  width: 100%;
+  padding: 7px;
+  margin: 0 auto;
+}

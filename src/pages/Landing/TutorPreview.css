@@ -1,0 +1,48 @@
+#tutor-section {
+  display: flex;
+  flex-direction: horizontal;
+  text-align: center;
+  margin: 0;
+  width: 100%;
+}
+
+#tutor-preview {
+  height: auto;
+  background-color: #64b5f6;
+}
+
+#tutor-title {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  text-align: center;
+  color: rgba(13, 71, 161);
+}
+
+.preview-img {
+  width: 55%;
+  margin: 0 auto 0 auto;
+}
+
+.tutor {
+  width: 25%;
+  margin: 5px;
+}
+
+.tutor-name {
+  color: rgba(21, 101, 192);
+  margin: 0;
+}
+
+.tutor-subjects {
+  font-family: "Century Gothic";
+  font-weight: 400;
+  margin: 0;
+}
+
+.tutor-quote {
+  font-family: "Century Gothic";
+  font-weight: 200;
+  font-size: 15px;
+  margin-top: 5px;
+  color: #606060;
+}

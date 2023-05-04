@@ -1,0 +1,160 @@
+body {
+	background-image: linear-gradient(rgba(37, 71, 153), rgba(51, 99, 184));
+	background-size: cover;
+	font-family: 'Baloo 2', cursive;
+	font-weight: 400;
+	color: #fff;
+	letter-spacing: 1px;
+}
+
+#container {
+	background-color: #fff;
+	width: 800px 1000px;
+	max-width: 1000px;
+	margin: 0px auto;
+	margin-top: 50px;
+	box-shadow: 10px 15px 20px rgba(0, 0, 0, .1);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-width: 20px;
+	border-style: solid;
+	border-radius: 10px;
+	border-color: #fff;
+	opacity: 0.9;
+}
+
+#tutor-info {
+	background-color: rgba(100, 181, 246);
+	padding: 50px;
+	outline: 3px dashed #fcfcfb;
+	outline-offset: -30px;
+	text-align: center;
+}
+
+#tutor-pic {
+	height: 250px;
+}
+
+#tutor-name {
+	font-size: x-large;
+	color: #fafaf9;
+	font-weight: bold;
+}
+
+#heading {
+	font-size: 45px;
+	color: rgba(51, 99, 184);
+}
+
+#container-form {
+	width: 500px;
+	padding: 20px 0;
+	margin: 0 auto;
+	color: rgba(51, 99, 184);
+}
+
+form {
+	display: grid;
+	grid-row-gap: 10px;
+}
+
+form p {
+	font-size: larger;
+	font-weight: 600;
+}
+
+#date {
+	width: 208px;
+}
+
+.form-field {
+	display: flex;
+	justify-content: space-between;
+}
+
+input {
+	width: 200px;
+}
+
+.btn {
+	background-color: rgba(100, 181, 246);
+	color: #fff;
+	padding: 10px 20px;
+	border: none;
+	font-size: 20px;
+	border-radius: 100px;
+	box-shadow: 7px 10px 12px rgba(0, 0, 0, .1);
+	cursor: pointer;
+	transition: all .3s;
+	font-family: 'Baloo 2', cursive;
+}
+
+.btn:hover {
+	box-shadow: 10px 12px 15px rgba(0, 0, 0, .3);
+}
+
+select {
+	box-shadow: 0 10px 25px rgba(0, 0, 0, .1);
+	width: 208px;
+	height: 57px;
+	border-radius: 2px;
+}
+
+
+
+.footer-container{
+	max-width: 1200px;
+	margin:auto;
+}
+.row{
+	display: flex;
+	flex-wrap: wrap;
+	width: auto;
+	justify-content: center;
+}
+ul{
+	list-style: none;
+}
+.footer{
+    padding: 70px 0;
+}
+.footer-col{
+   width: 25%;
+   padding: 0 15px;
+}
+.footer-col h4{
+	font-size: 18px;
+	color: #ffffff;
+	text-transform: capitalize;
+	margin-bottom: 35px;
+	font-weight: 500;
+	position: relative;
+}
+.footer-col h4::before{
+	content: '';
+	position: absolute;
+	left:0;
+	bottom: -10px;
+	background-color:rgba(100, 181, 246);;
+	height: 2px;
+	box-sizing: border-box;
+	width: 50px;
+}
+.footer-col ul li:not(:last-child){
+	margin-bottom: 10px;
+}
+.footer-col ul li a{
+	font-size: 16px;
+	text-transform: capitalize;
+	color: #ffffff;
+	text-decoration: none;
+	font-weight: 300;
+	color: #ffffff;
+	display: block;
+	transition: all 0.3s ease;
+}
+.footer-col ul li a:hover{
+	color: #ffffff;
+	padding-left: 8px;
+}

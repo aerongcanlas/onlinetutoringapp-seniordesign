@@ -1,0 +1,23 @@
+#copyright {
+  margin: 10px 0 0 0;
+}
+
+#footer-menu {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  font-size: 0.75rem;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+li {
+  padding: 0 10px 10px 0;
+}
+
+li:hover {
+  cursor: pointer;
+  text-decoration: underline;
+}

@@ -1,0 +1,60 @@
+#search {
+  margin: 0;
+  height: 400px;
+  background-image: url("./Blu-E_Banner.png"),
+    linear-gradient(0deg, rgba(13, 71, 161), rgba(21, 101, 192));
+  background-position: 100% 0;
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+#search-content {
+  position: relative;
+  top: 100px;
+  left: 100px;
+  width: 1000px;
+}
+
+#search-text-1 {
+  color: #ffff;
+  display: inline;
+  font-size: 60px;
+}
+
+#search-text-2 {
+  display: inline;
+  color: rgba(100, 181, 246);
+  font-size: 60px;
+}
+
+#search-text-3 {
+  color: #ffff;
+  margin-top: -10px;
+  margin-bottom: 10px;
+  font-size: 25px;
+  font-weight: 100px;
+}
+
+#search-fig {
+  display: flex;
+  flex-direction: row;
+  width: 1000px;
+  justify-content: center;
+}
+
+#searchbar {
+  height: 35px;
+  width: 500px;
+  background-color: #ffff;
+  border-radius: 10px;
+  padding-left: 10px;
+  padding-top: 5px;
+  margin-left: 1px;
+  color: rgba(0, 0, 0);
+}
+
+#search-img {
+  height: 40px;
+  width: 40px;
+  margin-left: 5px;
+}

@@ -1,0 +1,74 @@
+#header {
+  position: sticky;
+  z-index: 1;
+  height: 66px;
+  background-color: #ffff;
+}
+
+#title {
+  position: absolute;
+  left: 20px;
+  font-size: 40px;
+  color: rgba(100, 181, 246);
+  font-weight: 800;
+  background: none;
+  border: none;
+  border-radius: 0.5rem;
+}
+
+.links:hover {
+  cursor: pointer;
+  background-size: auto 10px;
+  background: #e2e2e2;
+}
+
+.links:active {
+  cursor: pointer;
+  background-size: 200px;
+  background: #b9b9b9;
+}
+
+.links {
+  font-size: 25px;
+  color: rgba(51, 99, 184);
+  font-weight: 600;
+  background: none;
+  border: none;
+  border-radius: 0.5rem;
+}
+
+#tutors {
+  position: absolute;
+  top: 13px;
+  left: 150px;
+}
+
+#login {
+  position: absolute;
+  top: 13px;
+  right: 20px;
+}
+
+#signup {
+  position: absolute;
+  top: 13px;
+  right: 100px;
+}
+
+#logout {
+  position: absolute;
+  top: 13px;
+  right: 20px;
+}
+
+#profile {
+  position: absolute;
+  top: 13px;
+  right: 124px;
+}
+
+#favorites {
+  position: absolute;
+  top: 13px;
+  right: 218px;
+}
