@@ -45,11 +45,6 @@ function TutorCard({ tutors }) {
           <div id="tutor-name">{Val.TutorName}</div>
           <div id="tutor-subjects">{Val.Subjects}</div>
           <div id="tutor-desc">{Val.AboutMe || "--no description--"}</div>
-          <div>
-            <button onClick={(e) => handleFavorite(Val.Username)}>
-              Add to Favorites
-            </button>
-          </div>
           <Link id="appointment" to={`/set-appointment/${Val.Username}`}>
             Make an Appointment
           </Link>

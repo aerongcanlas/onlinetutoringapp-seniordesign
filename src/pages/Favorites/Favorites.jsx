@@ -1,14 +1,29 @@
 import React, { useEffect, useState } from "react";
-import TutorCard from "../AllTutors/TutorCard";
-import Buttons from "../AllTutors/Buttons";
+import TutorCard from "./TutorCard";
+import Buttons from "./Buttons";
 import "./Favorites.css";
+import { useAuth0 } from "@auth0/auth0-react";
 
 function Favorites() {
+  const { user } = useAuth0();
   const [isBusy, setBusy] = useState(true);
+  const [allTutors, setAllTutors] = useState([]);
   const [tutors, setTutors] = useState([]);
 
   useEffect(() => {
-    fetch("http://127.0.0.1:3000/favorites")
+    const data = {
+      SID: user.nickname,
+    };
+    fetch("http://127.0.0.1:3000/favorites", {
+      method: "POST",
+      headers: {
+        "Access-Control-Allow-Headers": "*",
+        "Access-Control-Allow-Origin": "*",
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
       .then((response) => {
         setBusy(false);
         return response.json();

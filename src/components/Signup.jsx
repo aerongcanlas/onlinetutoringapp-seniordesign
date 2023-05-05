@@ -2,14 +2,15 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../styling/Signup.css";
 import bcrypt from "bcryptjs";
+import { useAuth0 } from "@auth0/auth0-react";
 
 export default function Signup() {
+  const { user } = useAuth0();
   const navigate = useNavigate();
   const [isTutor, setIsTutor] = useState(false);
   const [displaySignup, setDisplaySignup] = useState(false);
   const [fName, setFName] = useState("");
   const [lName, setLName] = useState("");
-  const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPW, setConfirmPW] = useState("");

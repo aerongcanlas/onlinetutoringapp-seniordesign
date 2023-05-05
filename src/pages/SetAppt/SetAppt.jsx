@@ -3,10 +3,12 @@ import { useParams } from "react-router-dom";
 import "./SetAppt.css";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { useAuth0 } from "@auth0/auth0-react";
 
 function SetAppt() {
   const [imgError, setImgError] = useState(true);
   const { username } = useParams();
+  const { user } = useAuth0();
 
   const [tutor, setTutor] = useState(null);
   const [subject, setSubject] = useState("");
@@ -48,9 +50,8 @@ function SetAppt() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    const SID = "AbigailAlexander25";
     let data = {
-      SID,
+      SID: user.nickname,
       TID: username,
       date: dateString,
       time,

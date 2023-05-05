@@ -36,7 +36,7 @@ def tutor():
             From Tutor\
             INNER JOIN Subject ON Tutor.Username = Subject.TID\
             GROUP BY Tutor.Username\
-            LIMIT 5")
+            LIMIT 10")
     mysql.connection.commit()
     myResult = myCursor.fetchall()
 
@@ -233,17 +233,22 @@ def AvailableHours_insert(Username, Date, Time, Duration):
     return msg
 
 
-@app.route('/favoritelists', methods=['GET'])
-def FavoriteLists():
+@app.route('/favorites', methods=['POST'])
+def Favorites():
+    data = request.get_json()
     myCursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-    myCursor.execute("SELECT FavoriteLists.SID AS Student_Username,\
-                    FavoriteLists.TID AS Tutor_Username,\
-                    concat(Tutor.FirstName,' ',Tutor.LastName) AS TutorName, \
-                    concat(Student.FirstName,' ', Student.LastName) AS StudentName \
-                    FROM FavoriteLists\
-                    INNER JOIN Student ON FavoriteLists.SID = Student.Username\
-                    INNER JOIN Tutor ON FavoriteLists.TID = Tutor.Username")
-
+    myCursor.execute("SELECT Tutor.Username AS Username,\
+            concat(Tutor.FirstName,' ',Tutor.LastName) AS TutorName,\
+            Tutor.Email AS Email,\
+            Tutor.AboutMe AS AboutMe,\
+            Tutor.TotalHours AS TotalHours,\
+            Tutor.ProfilePicture AS ProfilePicture,\
+            group_concat(Subject.SubjectName separator ',') AS Subjects\
+                    FROM Favorites\
+                    RIGHT JOIN Tutor ON Favorites.TID = Tutor.Username\
+                    INNER JOIN Subject ON Tutor.Username = Subject.TID\
+                    WHERE Favorites.SID = %s\
+                    GROUP BY Tutor.Username", (data["SID"],))
     mysql.connection.commit()
     myResult = myCursor.fetchall()
     if myResult:
@@ -252,34 +257,15 @@ def FavoriteLists():
         return 'Error Fetching Database'
 
 
-@app.route('/favoritelists/<string:Username>', methods=['GET'])
-def FavoriteLists_Username(Username):
+@app.route('/add-favorite', methods=['POST'])
+def add_favorite():
+    data = request.get_json()
     myCursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-    myCursor.execute("SELECT FavoriteLists.SID AS Student_Username,\
-                    FavoriteLists.TID AS Tutor_Username,\
-                    concat(Student.FirstName,' ', Student.LastName) AS StudentName \
-                    concat(Tutor.FirstName,' ',Tutor.LastName) AS TutorName, \
-                    concat(Student.FirstName,' ', Student.LastName) AS StudentName \
-                    FROM FavoriteLists\
-                    INNER JOIN Student ON FavoriteLists.SID = Student.Username\
-                    INNER JOIN Tutor ON FavoriteLists.TID = Tutor.Username\
-                    WHERE FavoriteLists.SID = %s", (Username,))
-
-    mysql.connection.commit()
-    myResult = myCursor.fetchall()
-    if myResult:
-        return jsonify(myResult)
-    else:
-        return 'Error Fetching Database'
-
-
-@app.route('/favoritelists/insert/<string:SID>/<string:TID>', methods=['GET', 'POST'])
-def FavoriteLists_insert(SID, TID):
-    myCursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-    myCursor.execute('INSERT INTO FavoriteLists VALUES (%s, %s)', (TID, SID,))
+    myCursor.execute('INSERT INTO Favorites VALUES (%s, %s)',
+                     (data["SID"], data["TID"],))
     mysql.connection.commit()
 
-    msg = f'Insert successful, Student Username = {SID}, Tutor Username = {TID}'
+    msg = f'Insert successful'
     return msg
 
 

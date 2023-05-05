@@ -33,6 +33,13 @@ function AllTutors() {
     setTutors(newTutor);
   };
 
+  const filterName = (name) => {
+    const newTutor = tutors.filter((val) => {
+      return val.TutorName.includes(name);
+    });
+    setTutors(newTutor);
+  };
+
   return (
     <div id="tutors-page">
       <h1 id="tutors-title">Meet Our Tutors</h1>
@@ -44,6 +51,7 @@ function AllTutors() {
             setTutors={setTutors}
             subjects={subjects}
             filterTutors={filterTutors}
+            filterName={filterName}
           />
         </div>
         <div id="tutors-column">
