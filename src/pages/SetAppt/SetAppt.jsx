@@ -8,32 +8,13 @@ function SetAppt() {
   const [imgError, setImgError] = useState(true);
   const { username } = useParams();
 
-  const dayOfWeek = [
-    "Sunday",
-    "Monday",
-    "Tuesday",
-    "Wednesday",
-    "Thursday",
-    "Friday",
-    "Saturday",
-  ];
-
-  const foo = {
-    Monday: ["8:00-9:00", "9:00-10:00", "10:00-11:00"],
-    Tuesday: ["11:00-12:00", "12:00-13:00", "13:00-14:00"],
-    Wednesday: ["14:00-15:00"],
-    Thursday: ["16:00-17:00"],
-    Friday: ["17:00-18:00"],
-    Saturday: [""],
-    Sunday: [""],
-  };
-
   const [tutor, setTutor] = useState(null);
   const [subject, setSubject] = useState("");
   const [date, setDate] = useState(new Date());
+  const [dateString, setDateString] = useState(new Date().toString());
   const [time, setTime] = useState("");
-  const [day, setDay] = useState(dayOfWeek[new Date().getDay()]);
-  const [hours, setHours] = useState(["9:00-10:00"]);
+  const [hours, setHours] = useState([""]);
+  const [success, setSuccess] = useState(false);
 
   useEffect(() => {
     fetch(`http://127.0.0.1:3000/tutors/${username}`)
@@ -42,12 +23,55 @@ function SetAppt() {
       })
       .then((data) => {
         setTutor(data);
-        let avail = JSON.parse(data.Availability);
-        let availHours = Object.keys(avail).filter((key) => avail[key] !== 0);
-        setHours(availHours);
       })
       .catch((err) => console.log(err.message));
   }, []);
+
+  const handleDateChange = (e) => {
+    setDate(e);
+    const tempDateString =
+      e.getFullYear().toString() +
+      "-" +
+      (e.getMonth() + 1).toString().padStart(2, "0") +
+      "-" +
+      e.getDate().toString().padStart(2, "0");
+
+    setDateString(tempDateString);
+    fetch(`http://127.0.0.1:3000/availability/${username}/${tempDateString}`)
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        setHours(data.map((a) => a.startTime.padStart(8, "0").slice(0, 5)));
+      });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const SID = "AbigailAlexander25";
+    let data = {
+      SID,
+      TID: username,
+      date: dateString,
+      time,
+      subject,
+    };
+    console.log(JSON.stringify(data));
+    fetch("http://127.0.0.1:3000/set-appointment", {
+      method: "POST",
+      headers: {
+        "Access-Control-Allow-Headers": "*",
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(data),
+    })
+      .then((resp) => resp.json)
+      .then((data) => setSuccess(true))
+      .catch((error) => {
+        console.error("Error:", error);
+      });
+  };
 
   return (
     <>
@@ -73,7 +97,7 @@ function SetAppt() {
           </div>
 
           <div id="container-form">
-            <form action="#">
+            <form onSubmit={handleSubmit}>
               <h2 id="heading">Make Appointment</h2>
               <div className="form-field">
                 <p>Subject</p>
@@ -81,6 +105,7 @@ function SetAppt() {
                   value={subject}
                   onChange={(e) => setSubject(e.target.value)}
                 >
+                  <option key={""}></option>
                   {tutor.Subjects.split().map((subj) => {
                     return <option key={subj}>{subj}</option>;
                   })}
@@ -91,25 +116,9 @@ function SetAppt() {
                 <DatePicker
                   id="date"
                   selected={date}
-                  onSelect={(e) => setDate(e)}
-                  onChange={(e) => setDate(e)}
+                  onSelect={(e) => handleDateChange(e)}
+                  onChange={(e) => handleDateChange(e)}
                 />
-                {/* <div className="custom-select">
-                  <input
-                    type="date"
-                    onChange={(e) => {
-                      setDate(new Date(e.target.value));
-                      setDay(dayOfWeek[date.getDay()]);
-                      setHours(foo[day]);
-                      console.log(e.target.value);
-                      console.log(date);
-                      console.log(day);
-                      console.log(hours);
-                      console.log(date.getDay());
-                    }}
-                    value={date}
-                  />
-                </div> */}
               </div>
               <div className="form-field">
                 <p>Time</p>
@@ -118,6 +127,7 @@ function SetAppt() {
                     value={time}
                     onChange={(e) => setTime(e.target.value)}
                   >
+                    <option key={""}></option>
                     {hours.map((hour) => {
                       return <option key={hour}>{hour}</option>;
                     })}
@@ -125,6 +135,7 @@ function SetAppt() {
                 </div>
               </div>
               <button className="btn">Submit</button>
+              {success && <div>Thank you for setting an appointment!</div>}
             </form>
           </div>
         </div>
