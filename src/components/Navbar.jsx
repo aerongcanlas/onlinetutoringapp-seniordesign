@@ -38,7 +38,7 @@ function Navbar() {
             id="logout"
             className="links"
             onClick={() =>
-              logout({ logoutParams: { returnTo: window.location.origin } })
+              logout({ logoutParams: { returnTo: "http://127.0.0.1:5173" } })
             }
           >
             Log Out

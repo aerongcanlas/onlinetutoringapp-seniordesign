@@ -5,13 +5,13 @@ import { useAuth0 } from "@auth0/auth0-react";
 
 function TutorCard({ tutors }) {
   const { user } = useAuth0();
-  const handleFavorite = (username) => {
+  const handleRemoveFavorite = (username) => {
     let data = {
       SID: user.nickname,
       TID: username,
     };
-    console.log(JSON.stringify(data));
-    fetch("http://127.0.0.1:3000/add-favorite", {
+    alert(`Removed ${username} from Favorites. Refresh the page!`);
+    fetch("http://127.0.0.1:3000/remove-favorite", {
       method: "POST",
       headers: {
         "Access-Control-Allow-Headers": "*",
@@ -45,6 +45,11 @@ function TutorCard({ tutors }) {
           <div id="tutor-name">{Val.TutorName}</div>
           <div id="tutor-subjects">{Val.Subjects}</div>
           <div id="tutor-desc">{Val.AboutMe || "--no description--"}</div>
+          <div>
+            <button onClick={(e) => handleRemoveFavorite(Val.Username)}>
+              Remove from Favorites
+            </button>
+          </div>
           <Link id="appointment" to={`/set-appointment/${Val.Username}`}>
             Make an Appointment
           </Link>

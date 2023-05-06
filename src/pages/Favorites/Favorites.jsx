@@ -49,7 +49,7 @@ function Favorites() {
 
   return (
     <div id="tutors-page">
-      <h1 id="tutors-title">Meet Our Tutors</h1>
+      <h1 id="tutors-title">Your Favorites</h1>
 
       <div id="tutors-main">
         <div id="filters-column">

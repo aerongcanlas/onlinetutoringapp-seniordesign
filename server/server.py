@@ -234,7 +234,7 @@ def AvailableHours_insert(Username, Date, Time, Duration):
 
 
 @app.route('/favorites', methods=['POST'])
-def Favorites():
+def favorites():
     data = request.get_json()
     myCursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     myCursor.execute("SELECT Tutor.Username AS Username,\
@@ -262,6 +262,18 @@ def add_favorite():
     data = request.get_json()
     myCursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
     myCursor.execute('INSERT INTO Favorites VALUES (%s, %s)',
+                     (data["SID"], data["TID"],))
+    mysql.connection.commit()
+
+    msg = f'Insert successful'
+    return msg
+
+
+@app.route('/remove-favorite', methods=['POST'])
+def remove_favorite():
+    data = request.get_json()
+    myCursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+    myCursor.execute('DELETE FROM Favorites WHERE SID = %s AND TID = %s',
                      (data["SID"], data["TID"],))
     mysql.connection.commit()
 
@@ -334,29 +346,6 @@ def Subject_insert(TID, SubjectName):
 #         return make_response("Please include username and password", 500)
 
 #     return make_response('No Account, need to create new account', 500)
-
-# @app.route('/login', methods=['GET'])
-# def login(email, password, callback):
-#     account_types = ["Student", "Tutor"]
-#     query = 'SELECT id, nickname, email, password FROM users WHERE email = ?';
-
-#     myCursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-#     myCursor.execute(query)
-#     mysql.connection.query(query, [ email ], function(err, results) {
-#     if (err) return callback(err);
-#     if (results.length === 0) return callback(new WrongUsernameOrPasswordError(email));
-#     const user = results[0];
-
-#     bcrypt.compare(password, user.password, function(err, isValid) {
-#       if (err || !isValid) return callback(err || new WrongUsernameOrPasswordError(email));
-
-#       callback(null, {
-#         user_id: user.id.toString(),
-#         nickname: user.nickname,
-#         email: user.email
-#       });
-#     });
-#   });
 
 
 @app.route('/signup/student/<string:Username>/<string:FirstName>/<string:LastName>/<string:Email>/<string:Password>/<string:EducationLevel>', methods=['POST'])

@@ -10,7 +10,7 @@ function TutorCard({ tutors }) {
       SID: user.nickname,
       TID: username,
     };
-    console.log(JSON.stringify(data));
+    alert(`Added ${username} to favorites!`);
     fetch("http://127.0.0.1:3000/add-favorite", {
       method: "POST",
       headers: {
@@ -22,7 +22,9 @@ function TutorCard({ tutors }) {
       body: JSON.stringify(data),
     })
       .then((resp) => resp.json)
-      .then((data) => console.log(data))
+      .then((data) => {
+        console.log(data);
+      })
       .catch((error) => {
         console.error("Error:", error);
       });
