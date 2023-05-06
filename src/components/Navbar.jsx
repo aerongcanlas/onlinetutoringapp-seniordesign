@@ -38,7 +38,9 @@ function Navbar() {
             id="logout"
             className="links"
             onClick={() =>
-              logout({ logoutParams: { returnTo: "http://127.0.0.1:5173" } })
+              logout({
+                logoutParams: { returnTo: `${import.meta.env.BASE_URL}` },
+              })
             }
           >
             Log Out
