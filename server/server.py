@@ -23,6 +23,42 @@ def headers(response):
     return response
 
 
+@app.route('/fetch-user', methods=['POST'])
+def profile():
+    account_types = ["Student", "Tutor"]
+    data = request.get_json()
+    for account_type in account_types:
+        myCursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        myCursor.execute(
+            f"SELECT * FROM {account_type} WHERE Username= %s", [data["username"]])
+        mysql.connection.commit()
+
+        account = myCursor.fetchone()
+
+        if account:
+            return jsonify(account)
+
+    return 'no account found'
+
+
+@app.route('/get-appointments', methods=['POST'])
+def Appointments_Username():
+    account_types = ["SID", "TID"]
+
+    data = request.get_json()
+    for account_type in account_types:
+        myCursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
+        myCursor.execute("SELECT *\
+                        From Appointments\
+                        WHERE %s = %s", (account_type, data["username"],))
+        mysql.connection.commit()
+        myResult = myCursor.fetchall()
+        if myResult:
+            return jsonify(myResult)
+
+    return 'Username have no appointments in database'
+
+
 @app.route('/tutors', methods=['GET'])
 def tutor():
     myCursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
@@ -117,30 +153,6 @@ def Appointments():
         return jsonify(myResult)
     else:
         return 'Error fetching in Appointments'
-
-
-@app.route('/appointment/<string:Username>', methods=['GET'])
-def Appointments_Username(Username):
-
-    myCursor = mysql.connection.cursor(MySQLdb.cursors.DictCursor)
-    myCursor.execute("SELECT Appointments.AppointmentID, \
-                    Appointments.SID AS Student_Username,\
-                    Appointments.TID AS Tutor_Username,\
-                    concat(Tutor.FirstName,' ',Tut or.LastName) AS TutorName, \
-                    concat(Student.FirstName,' ', Student.LastName) AS StudentName,\
-                    concat(Appointments.Date,' ',Appointments.Time) AS Date_Time,\
-                    Appointments.Duration,\
-                    Appointments.SubjectName\
-                    From Appointments\
-                    INNER JOIN Student ON Appointments.SID = Student.Username\
-                    INNER JOIN Tutor ON Appointments.TID = Tutor.Username\
-                    WHERE Appointments.SID  = %s OR Appointments.TID = %s", (Username, Username,))
-    mysql.connection.commit()
-    myResult = myCursor.fetchall()
-    if myResult:
-        return jsonify(myResult)
-    else:
-        return 'Username have no appointments in database'
 
 
 @app.route('/set-appointment', methods=['POST'])
